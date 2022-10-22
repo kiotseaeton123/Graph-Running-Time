@@ -1,5 +1,5 @@
 # Graph-Running-Time
-complete graph and cycle graph using adjacency list
+Create complete graph and cycle graph using adjacency list
 
 - adjacency list representation of Graph
 - abstract class as interface for graph functions
