@@ -1,5 +1,8 @@
 import abc
+from multiprocessing.sharedctypes import Value
 import time
+import random
+import math
 
 #########################################################
 # 
@@ -31,26 +34,27 @@ class Graph(abc.ABC):
 #########################################################
 # 
 # Node class contains list of adjacent vertices
-# ... I used list as specified in assignment; can I change to set for optimization?
+# Using adjacency 'set' allows one single representation for a particular graph
 # 
 #########################################################
 class Node:
     def __init__(self, vertexId) -> None:
         self.vertexId = vertexId
-        self.adjacencyList = []
+        self.adjacencyList = set()
 
     def addEdge(self, v):
         if self.vertexId == v:
             raise ValueError('vertex %d can not be adjacent to itself' % v)
+            return
         
-        self.adjacencyList.append(v)
+        self.adjacencyList.add(v)
 
     def getAdjacentVertices(self):
         return sorted(self.adjacencyList)
 
 #########################################################
 # 
-# AdjacencyList representation of graph 
+# AdjacencyList(set) representation of graph 
 # 
 #########################################################
 class AdjacencyListGraph(Graph):
@@ -66,6 +70,7 @@ class AdjacencyListGraph(Graph):
         if v1 < 0 or v2 < 0 or v1 >= self.numberVertices or v2 >= self.numberVertices:
             raise ValueError('vertices %d and %d out of bound' % (v1, v2))
 
+        # if edge doesn't exist already
         self.vertexList[v1].addEdge(v2)
         # undirected graph, add edge the other way as well
         self.vertexList[v2].addEdge(v1)
@@ -100,17 +105,14 @@ class AdjacencyListGraph(Graph):
 
         outputFile.close()
 
-        # print to console for easy reading
-        # outputFile = open('outputFile.txt', 'r')
-        # print(outputFile.read())
-        # outputFile.close()
-
 #########################################################
 # 
 # main
+# uniform distribution for choosing graphs with conflicts/edges, using random() for pseudo random number generation
 # 
 #########################################################
-# Pls Note: timing data only works when doing one graph at a time despite using different variables for time(). Before running code, comment out one of the graphs inside of main
+# Note: timing data only works when doing one graph at a time despite using different variables for time(). Before running code, comment out one of the graphs inside of main
+
 numberVertices = 10
 
 # 
@@ -120,28 +122,13 @@ startTime = time.time()
 
 myGraph = AdjacencyListGraph(numberVertices)
 
-for i in range(numberVertices):
-    for j in range(i, numberVertices):
-        # vertex can't be adjacent to itself
-        if(i != j): 
-            myGraph.addEdge(i, j)
+for edge in range(numberVertices):
+    i = math.floor(random.random() * 10)
+    j = math.floor(random.random() * 10)
+    # vertex can't be adjacent to itself
+    if(i != j): 
+        myGraph.addEdge(i, j)
 
 print('complete graph ------ %s -------' % (time.time() - startTime))
 
 myGraph.print()
-
-# 
-# cycle, undirected graph
-# 
-# startTime2 = time.time()
-
-# cycleGraph = AdjacencyListGraph(numberVertices)
-
-# for i in range(numberVertices - 1):
-#     cycleGraph.addEdge(i, i + 1)
-
-# cycleGraph.addEdge(0, numberVertices - 1)
-
-# print('cycle graph ------ %s -------' % (time.time() - startTime2))
-
-# cycleGraph.print()
