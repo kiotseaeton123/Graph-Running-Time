@@ -104,30 +104,5 @@ class AdjacencyListGraph(Graph):
 
         outputFile.close()
 
-#########################################################
-# 
-# main
-# uniform distribution for choosing graphs with conflicts/edges, using random() for pseudo random number generation
-# 
-#########################################################
-# Note: timing data only works when doing one graph at a time despite using different variables for time(). Before running code, comment out one of the graphs inside of main
 
-numberVertices = 10000
 
-# 
-# complete undirected graph
-# 
-startTime = time.time()
-
-myGraph = AdjacencyListGraph(numberVertices)
-
-for edge in range(numberVertices):
-    i = math.floor(random.random() * 10)
-    j = math.floor(random.random() * 10)
-    # vertex can't be adjacent to itself
-    if(i != j): 
-        myGraph.addEdge(i, j)
-
-print('complete graph ------ %s seconds -------' % (time.time() - startTime))
-
-myGraph.print()
