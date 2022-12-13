@@ -113,7 +113,7 @@ class AdjacencyListGraph(Graph):
 #########################################################
 # Note: timing data only works when doing one graph at a time despite using different variables for time(). Before running code, comment out one of the graphs inside of main
 
-numberVertices = 10
+numberVertices = 10000
 
 # 
 # complete undirected graph
@@ -129,6 +129,6 @@ for edge in range(numberVertices):
     if(i != j): 
         myGraph.addEdge(i, j)
 
-print('complete graph ------ %s -------' % (time.time() - startTime))
+print('complete graph ------ %s seconds -------' % (time.time() - startTime))
 
 myGraph.print()
