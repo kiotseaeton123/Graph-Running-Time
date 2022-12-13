@@ -111,7 +111,7 @@ class AdjacencyListGraph(Graph):
 # 
 #########################################################
 # Pls Note: timing data only works when doing one graph at a time despite using different variables for time(). Before running code, comment out one of the graphs inside of main
-numberVertices = 8000
+numberVertices = 10
 
 # 
 # complete undirected graph
@@ -133,15 +133,15 @@ myGraph.print()
 # 
 # cycle, undirected graph
 # 
-startTime2 = time.time()
+# startTime2 = time.time()
 
-cycleGraph = AdjacencyListGraph(numberVertices)
+# cycleGraph = AdjacencyListGraph(numberVertices)
 
-for i in range(numberVertices - 1):
-    cycleGraph.addEdge(i, i + 1)
+# for i in range(numberVertices - 1):
+#     cycleGraph.addEdge(i, i + 1)
 
-cycleGraph.addEdge(0, numberVertices - 1)
+# cycleGraph.addEdge(0, numberVertices - 1)
 
-print('cycle graph ------ %s -------' % (time.time() - startTime2))
+# print('cycle graph ------ %s -------' % (time.time() - startTime2))
 
-cycleGraph.print()
+# cycleGraph.print()
