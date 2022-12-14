@@ -11,21 +11,18 @@ import time
 import math
 import random
 
-numberVertices = 10000
-
-# 
-# complete undirected graph
-# 
+numberVertices = 100
 startTime = time.time()
 
 myGraph = graph.AdjacencyListGraph(numberVertices)
 
-for edge in range(numberVertices):
-    i = math.floor(random.random() * 10)
-    j = math.floor(random.random() * 10)
+# the number of edges is double that of vertices
+for edge in range(numberVertices * 2):
+    i = math.floor(random.random() * 100 % numberVertices)
+    j = math.floor(random.random() * 100 % numberVertices)
     # vertex can't be adjacent to itself
     if(i != j): 
         myGraph.addEdge(i, j)
 
-print('complete graph ------ %s seconds -------' % (time.time() - startTime))
-myGraph.print()
+print('create graph ------ %s seconds -------' % (time.time() - startTime))
+myGraph.printOutput()

@@ -27,7 +27,17 @@ class Graph(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def print(self):
+    def getOutdegree(self, v):
+        pass
+
+    # prints output for creating conflict graph
+    @abc.abstractmethod
+    def printOutput(self):
+        pass
+
+    # prints output for coloring graph
+    @abc.abstractmethod
+    def printOutput2(self):
         pass
 
 #########################################################
@@ -50,6 +60,9 @@ class Node:
 
     def getAdjacentVertices(self):
         return sorted(self.adjacencyList)
+    
+    def getDegree(self):
+        return len(self.adjacencyList)
 
 #########################################################
 # 
@@ -91,7 +104,13 @@ class AdjacencyListGraph(Graph):
 
         return indegree
 
-    def print(self):
+    def getOutdegree(self, v):
+        if v < 0 or v >= self.numberVertices:
+            raise ValueError('vertex %d is out of bounds' % v)
+        
+        return self.vertexList[v].getDegree()
+
+    def printOutput(self):
         outputFile = open('outputFile.txt', 'w')
         outputFile.write("%d = number of vertices\n" % len(self.vertexList))
 
@@ -104,5 +123,17 @@ class AdjacencyListGraph(Graph):
 
         outputFile.close()
 
+    def printOutput2(self):
+        outputFile = open('outputFile2.txt', 'w')
+        outputFile.write("%d = number of vertices\n" % len(self.vertexList))
+
+        for i in range(self.numberVertices):
+            outputFile.write("%d = starting index for vertex %d\n" % (i, i))
+
+        for i in range(self.numberVertices):
+            for j in self.getAdjacentVertices(i):
+                outputFile.write("%d is adjacent to %d\n" % (i, j))
+
+        outputFile.close()
 
 
